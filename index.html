@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b1220" />
+    <title>RelayOps — Resilient field coordination</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <div>
+          <p class="eyebrow"><span class="pulse"></span> RESILIENT FIELD COORDINATION</p>
+          <h1>Relay<span>Ops</span></h1>
+          <p class="subtitle">Keep critical relief and engineering updates available when the network is not.</p>
+        </div>
+        <div class="identity-card">
+          <span class="avatar" id="avatar">M</span>
+          <div><strong id="device-name">Field device</strong><small id="device-id">loading…</small></div>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <div class="document-card">
+          <div class="document-toolbar">
+            <div><span class="doc-dot"></span><input id="title" aria-label="Field log title" value="Cyclone Relief — Sector B" /></div>
+            <span class="saved" id="save-status">Saved on this device</span>
+          </div>
+          <textarea id="editor" spellcheck="true" aria-label="Collaborative field log" placeholder="Record a verified field update. Your changes are safe, even offline."></textarea>
+          <footer class="editor-footer"><span id="word-count">0 words</span><span id="operation-count">0 CRDT operations</span></footer>
+        </div>
+
+        <aside class="control-panel">
+          <section class="network-card">
+            <div class="section-heading"><h2>Field link</h2><span class="status-pill online" id="network-pill">Connected</span></div>
+            <p id="network-copy">Nearby authorised devices can receive verified updates.</p>
+            <button class="network-button" id="network-toggle"><span class="signal" id="signal-icon">◉</span><span id="network-action">Simulate signal loss</span></button>
+            <button class="sync-button" id="sync-button">Exchange field updates <span>↗</span></button>
+            <p class="hint">Operation order is shuffled on exchange. The final log always converges.</p>
+          </section>
+
+          <section class="security-card">
+            <div class="section-heading"><h2>Access control</h2><span class="verified">● verified</span></div>
+            <label for="role">Active role</label>
+            <select id="role" aria-label="Active role"><option>Field Coordinator</option><option>Engineering</option><option>Medical</option><option>Logistics</option><option>Observer</option></select>
+            <label for="pair-code">Pairing code</label>
+            <div class="pair-row"><input id="pair-code" aria-label="Pairing code" value="RELAY-42" maxlength="18" /><button id="join-pairing">Join</button></div>
+            <label for="relay-url">Local relay URL</label>
+            <div class="pair-row"><input id="relay-url" aria-label="Local relay URL" value="ws://127.0.0.1:8080" /><button id="connect-relay">Connect</button></div>
+            <button class="lock-button" id="lock-button">⌁ Lock this device</button>
+          </section>
+
+          <section class="peers-card">
+            <div class="section-heading"><h2>Nearby field devices</h2><span id="peer-count">1</span></div>
+            <div class="peers" id="peers"></div>
+            <p class="hint">Devices must use the same pairing code to share an update mesh.</p>
+          </section>
+
+          <section class="proof-card">
+            <p class="proof-label">INTEGRITY LOG</p>
+            <strong id="audit-status">Awaiting signed activity</strong>
+            <p id="audit-copy">Each locally-created update receives a SHA-256 integrity fingerprint and role stamp before exchange.</p>
+          </section>
+        </aside>
+      </section>
+
+      <section class="demo-lab">
+        <div class="lab-intro"><p class="eyebrow">JUDGE MODE</p><h2>Prove resilience in 10 seconds.</h2><p>Engineering and Medical teams work through a network outage. When their devices reconnect, both verified updates survive.</p></div>
+        <div class="simulation">
+          <div class="sim-header"><span>Signal-loss exercise</span><button id="run-demo">Run the exercise</button></div>
+          <div class="sim-devices">
+            <article class="sim-device alice"><header><span class="mini-avatar">E</span><div><strong>Engineering</strong><small>signal lost</small></div></header><div class="sim-edit" id="alice-edit">Waiting for a verified update…</div></article>
+            <div class="merge-mark" id="merge-mark">⇄<small>merge</small></div>
+            <article class="sim-device bob"><header><span class="mini-avatar">M</span><div><strong>Medical</strong><small>signal lost</small></div></header><div class="sim-edit" id="bob-edit">Waiting for a verified update…</div></article>
+          </div>
+          <div class="convergence" id="convergence"><span>◈</span><div><strong>Ready for the exercise</strong><small>Independent, role-stamped updates will converge here.</small></div></div>
+        </div>
+      </section>
+    </main>
+    <div class="toast" id="toast" role="status"></div>
+    <div class="lock-screen" id="lock-screen" hidden>
+      <div class="lock-dialog"><p class="eyebrow">DEVICE SESSION LOCKED</p><h2>Local access paused</h2><p>This demonstrator uses a session unlock code. Production use requires hardware-backed keys and independent security review.</p><label for="unlock-code">Unlock code</label><input id="unlock-code" aria-label="Unlock code" type="password" autocomplete="off" placeholder="FIELD-42" /><button id="unlock-button">Unlock session</button><small id="unlock-error"></small></div>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
